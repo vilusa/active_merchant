@@ -30,6 +30,8 @@ module ActiveMerchant #:nodoc:
 
       base.class_attribute :proxy_address
       base.class_attribute :proxy_port
+      base.class_attribute :proxy_user
+      base.class_attribute :proxy_password
     end
 
     def ssl_get(endpoint, headers = {})

@@ -39,6 +39,8 @@ module ActiveMerchant
     attr_accessor :max_retries
     attr_accessor :proxy_address
     attr_accessor :proxy_port
+    attr_accessor :proxy_user
+    attr_accessor :proxy_password
 
     def initialize(endpoint)
       @endpoint     = endpoint.is_a?(URI) ? endpoint : URI.parse(endpoint)
@@ -58,6 +60,8 @@ module ActiveMerchant
       @ssl_connection = {}
       @proxy_address = :ENV
       @proxy_port = nil
+      @proxy_user = nil
+      @proxy_password = nil
     end
 
     def wiredump_device=(device)
@@ -127,7 +131,7 @@ module ActiveMerchant
 
     def http
       @http ||= begin
-        http = Net::HTTP.new(endpoint.host, endpoint.port, proxy_address, proxy_port)
+        http = Net::HTTP.new(endpoint.host, endpoint.port, proxy_address, proxy_port, proxy_user, proxy_password)
         configure_debugging(http)
         configure_timeouts(http)
         configure_ssl(http)
