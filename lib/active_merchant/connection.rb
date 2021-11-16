@@ -131,7 +131,11 @@ module ActiveMerchant
 
     def http
       @http ||= begin
-        http = Net::HTTP.new(endpoint.host, endpoint.port, proxy_address, proxy_port, proxy_user, proxy_password)
+        http = if !proxy_user.nil? && !proxy_password.nil?
+           Net::HTTP::Proxy(proxy_address, proxy_port, proxy_user, proxy_password).new(endpoint.host, endpoint.port)
+        else
+          Net::HTTP.new(endpoint.host, endpoint.port, proxy_address, proxy_port)
+        end
         configure_debugging(http)
         configure_timeouts(http)
         configure_ssl(http)

@@ -70,8 +70,10 @@ module ActiveMerchant #:nodoc:
 
       connection.ignore_http_status = @options[:ignore_http_status] if @options
 
-      connection.proxy_address = proxy_address
-      connection.proxy_port    = proxy_port
+      connection.proxy_address  = proxy_address
+      connection.proxy_port     = proxy_port
+      connection.proxy_user     = proxy_user
+      connection.proxy_password = proxy_password
 
       connection.request(method, data, headers)
     end
